@@ -117,3 +117,31 @@ Now, the perl combinator version:
     }
 
 
+And now the scala version
+
+        /* Parse an example from a job interview.
+        Example data: [A,[B,[C]],[D]]
+        */
+
+        import scala.util.parsing.combinator.RegexParsers
+
+        class MyParser extends RegexParsers {
+            def f = array 																										/* Top level must always be an array of nodes */
+            def array:Parser[Any] = "[" ~ elements.* ~ element.*  ~ "]" 			/* An array is a list of elements, separated by commas */
+            def elements = element ~ ","																			/* The comma separated part of the lsit */
+            def element =  chara | array																			/* The last element has no comma after it */
+            def chara = "[a-zA-Z]".r																					/* The only allowed node names are a-z and A-Z */
+        }
+
+        /* Let's test this a bit */
+        val p = new MyParser
+        Console.println( p.parseAll(p.f, "[a]") )
+        Console.println( p.parseAll(p.f, "[a,b]") )
+        Console.println( p.parseAll(p.f, "[a,c]") )
+        Console.println( p.parseAll(p.f, "[[a],c]") )
+        Console.println( p.parseAll(p.f, "[a,[c]]") )
+        Console.println( p.parseAll(p.f, "[[a],[c]]") )
+        Console.println( p.parseAll(p.f, "[A,[B,[C]],[D]]") )
+
+        /* Even better are the error messages.  You get a useful error message from the parser when it fails to parse, without have to do any extra work */
+        Console.println( p.parseAll(p.f, "[A,[B,[C]],[D]") )
