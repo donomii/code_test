@@ -1,5 +1,3 @@
-(This text is best viewed in a monospace font.)
-
 This exercise is about an operation on a tree data structure.
 
 Concepts
@@ -37,17 +35,17 @@ below it connected by lines, and children's children below those, etc.
 
 For example,
 
-A
-|
-B
+    A
+    |
+    B
 
 is a rooted tree with root A. and so is
 
-  A
- / \
-B   C
-|
-D
+      A
+     / \
+    B   C
+    |
+    D
 
 An operation
 ------------
@@ -55,19 +53,19 @@ An operation
 Now consider changing the root of an existing tree. For example, for
 this tree T1:
 
-  A
- / \
-B   C
-|
-D
+      A
+     / \
+    B   C
+    |
+    D
 
 we may make B the root and get this tree T2:
 
-B
-| \
-D  A
-   |
-   C
+    B
+    | \
+    D  A
+       |
+       C
 
 As you can see, the adjacencies are the same, it is just the root that
 is chosen differently.
@@ -81,9 +79,11 @@ elements are the representations of the children.
 
 In this representation, our tree T1 looks like
 
-$T1 = ['A', ['B', ['D']], ['C']]
+    $T1 = ['A', ['B', ['D']], ['C']]
 
-and T2 looks like $T2 = ['B', ['D'], ['A', ['C']]].
+and T2 looks like 
+
+    $T2 = ['B', ['D'], ['A', ['C']]].
 
 Exercise
 ========
