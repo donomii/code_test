@@ -6,21 +6,16 @@ The node layout is: [A,[B,[C]],[D]]
 
 So onto the perl solution:
 First up, the comedy solution:
-
-    my $str = '[A,[B,[C]],[D]]';
-
-    say Dumper parse($str);
-
-    sub parse {
-      my $str = shift;
+```perl
+      my $str = '[A,[B,[C]],[D]]';
       $str =~ s/(\w+)/'$1'/g;
-      return eval $str;
-    }
+      say Dumper eval $str;
+```
 
-Hey, it works and it's readable.
+Hey, it works and it's readable.  Mostly readable.
 
 Now, the perl combinator version:
-
+```perl
     my $str = '[A,[B,[C]],[D]]';
 
     say Dumper parser()->() ;
@@ -44,7 +39,6 @@ Now, the perl combinator version:
     #These functions are the equivalent of a "object factory".  They are a function factory.
     #They don't parse a string, they build a parser, that parses a string.
     #That is why we call parser()->() at the top of the program.
-    #
     #parser() creates a parser, and ->() actually parses
 
 
@@ -115,10 +109,11 @@ Now, the perl combinator version:
         return [@ret];
       }
     }
-
+```
 
 And now the scala version
 
+```scala
         /* Parse an example from a job interview.
         Example data: [A,[B,[C]],[D]]
         */
@@ -145,3 +140,4 @@ And now the scala version
 
         /* Even better are the error messages.  You get a useful error message from the parser when it fails to parse, without have to do any extra work */
         Console.println( p.parseAll(p.f, "[A,[B,[C]],[D]") )
+```
