@@ -121,11 +121,11 @@ And now the scala version
         import scala.util.parsing.combinator.RegexParsers
 
         class MyParser extends RegexParsers {
-            def f = array 	                                             /* Top level must always be an array of nodes */
+            def f = array                                                  /* Top level must always be an array of nodes */
             def array:Parser[Any] = "[" ~ elements.* ~ element.*  ~ "]"    /* An array is a list of elements, separated by commas */
-            def elements = element ~ ","						   /* The comma separated part of the lsit */
-            def element =  chara | array						   /* The last element has no comma after it */
-            def chara = "[a-zA-Z]".r						   /* The only allowed node names are a-z and A-Z */
+            def elements = element ~ ","                                   /* The comma separated part of the lsit */
+            def element =  chara | array                                   /* The last element has no comma after it */
+            def chara = "[a-zA-Z]".r                                       /* The only allowed node names are a-z and A-Z */
         }
 
         /* Let's test this a bit */
