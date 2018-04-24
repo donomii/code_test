@@ -141,3 +141,28 @@ And now the scala version
         /* Even better are the error messages.  You get a useful error message from the parser when it fails to parse, without have to do any extra work */
         Console.println( p.parseAll(p.f, "[A,[B,[C]],[D]") )
 ```
+
+My coworker also wrote a scala version, with a much more imperative feel to it:
+
+```scala
+parse("[A,[B,[C]],[D]]")
+
+def parse(s: String): List[Any] = {
+  parse(s.toIterator).left.get
+}
+
+def parse(i: Iterator[Char]): Either[List[Any], Char] = {
+	val c = i.next
+  if (c == '[') {
+    var l = List[Any]()
+  	while (i.hasNext) {
+      val v = parse(i)
+    	if (v.isRight && v.right.get == ']') return Left(l)
+      if (v.isLeft) l = l :+ v.left.get
+    	else if (v.right.get != ',') l = l :+ v.right.get
+  	}
+    Left(l)
+  }
+  else Right(c)
+}
+```
