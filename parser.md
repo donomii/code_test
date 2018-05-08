@@ -142,27 +142,20 @@ And now the scala version
         Console.println( p.parseAll(p.f, "[A,[B,[C]],[D]") )
 ```
 
-My coworker also wrote a scala version, with a much more imperative feel to it:
+My coworker also wrote a scala version, with a very much functional feel to it:
 
 ```scala
 parse("[A,[B,[C]],[D]]")
 
-def parse(s: String): List[Any] = {
-  parse(s.toIterator).left.get
+case class Node(label: Char, children: List[Node] = List())
+def parse(s: String): Node = parse(s.toIterator).get
+def parse(i: Iterator[Char]): Option[Node] = i.next match {
+  case '[' => Some(Node(i.next, parseChildren(i)(Nil)))
+  case ',' => parse(i)
+  case ']' => None
 }
-
-def parse(i: Iterator[Char]): Either[List[Any], Char] = {
-	val c = i.next
-  if (c == '[') {
-    var l = List[Any]()
-  	while (i.hasNext) {
-      val v = parse(i)
-    	if (v.isRight && v.right.get == ']') return Left(l)
-      if (v.isLeft) l = l :+ v.left.get
-    	else if (v.right.get != ',') l = l :+ v.right.get
-  	}
-    Left(l)
-  }
-  else Right(c)
+def parseChildren(i: Iterator[Char]): (List[Node] => List[Node]) = l => parse(i) match {
+  case Some(c)  => c :: parseChildren(i)(l)
+  case None     => l
 }
 ```
