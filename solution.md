@@ -21,7 +21,7 @@ sub treewalk {
 
 The parameters
 
-* tree - The subtree we are searching
+* $tree - The subtree we are searching
 * $target - The new root node identifier.  In this case, it is alway the first element of the array.
 * $path - The path through the old tree that we have followed to get to the current node.  Conveniently, this path is also the correct answer.
 
@@ -123,7 +123,7 @@ done_testing();
 
 # The long solution
 
-The short solution works in cases where we don't get to prepare the data structure ourselves, perhaps because we are getitng it from a framework or another module.  I'd still prefer to modify that module, but that depends on the circumstances.
+The short solution works in cases where we don't get to prepare the data structure ourselves, perhaps because we are getting it from a framework or another module.  I'd still prefer to modify that module, but that depends on the circumstances.
 
 If we can prepare the data structure ourselves, I would choose a different graph structure that would allow me to return answers in O(1) time.
 
